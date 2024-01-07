@@ -16,17 +16,19 @@ SECTIONS = academic_appointments.tex awards.tex education.tex other.tex pubs.tex
 # add a prefix
 SECTION_FILES = $(addprefix ${SECTION_DIR}, ${SECTIONS})
 PDFS = cv-new.pdf cv-expert-witness.pdf
-BIB_TEX = $(addprefix ${GENERATED_DIR}, bib_summary.tex publications.xml)
-STUDENT_TEX = $(addprefix ${GENERATED_DIR}, phd_students.tex ms_students.tex ug_students.tex phd_footnotes.tex ms_footnotes.tex pdfs.tex meng_students.tex students.html students.xml)
-NEW_STUDENT_TEX = $(addprefix ${GENERATED_DIR}, new_ug_students.tex new_ms_students.tex new_phd_students.tex new_pdfs.tex new_meng_students.tex)
-TEACHING_TEX = $(addprefix ${GENERATED_DIR}, grad_teaching.tex ug_teaching.tex)
-TALKS_TEX = $(addprefix ${GENERATED_DIR}, invited_talks.tex conference_talks.tex talks.xml)
-TPCS_TEX = $(addprefix ${GENERATED_DIR}, TPCs.tex tpcs.xml)
-FUNDING_TEX = $(addprefix ${GENERATED_DIR}, funding.tex funding.xml)
-CASES_TEX = $(addprefix ${GENERATED_DIR}, cases.tex)
-COLLABORATORS_TEX = $(addprefix ${GENERATED_DIR}, collabs.tex conflicts.txt)
+BIB_TEX = $(addprefix ${GENERATED_DIR}, bib_summary.tex publications.xml) 
+STUDENT_TEX = $(addprefix ${GENERATED_DIR}, phd_students.tex ms_students.tex ug_students.tex phd_footnotes.tex ms_footnotes.tex pdfs.tex meng_students.tex students.html students.xml) 
+NEW_STUDENT_TEX = $(addprefix ${GENERATED_DIR}, new_ug_students.tex new_ms_students.tex new_phd_students.tex new_pdfs.tex new_meng_students.tex) 
+TEACHING_TEX = $(addprefix ${GENERATED_DIR}, grad_teaching.tex ug_teaching.tex) 
+TALKS_TEX = $(addprefix ${GENERATED_DIR}, invited_talks.tex conference_talks.tex talks.xml) 
+TPCS_TEX = $(addprefix ${GENERATED_DIR}, TPCs.tex tpcs.xml) 
+FUNDING_TEX = $(addprefix ${GENERATED_DIR}, funding.tex funding.xml) 
+CASES_TEX = $(addprefix ${GENERATED_DIR}, cases.tex) 
+COLLABORATORS_TEX = $(addprefix ${GENERATED_DIR}, collabs.tex conflicts.txt) 
 TEX_FILES = ${STUDENT_TEX} ${NEW_STUDENT_TEX} ${TEACHING_TEX} ${TALKS_TEX} ${TPCS_TEX} ${BIB_TEX} ${FUNDING_TEX} ${CASES_TEX} ${COLLABORATORS_TEX}
-XML_FILES = $(addprefix ${GENERATED_DIR}, funding.xml publications.xml students.xml talks.xml tpcs.xml)
+XML_FILES = $(addprefix ${GENERATED_DIR}, funding.xml publications.xml students.xml talks.xml tpcs.xml) 
+
+$(shell mkdir -p ${GENERATED_DIR})
 
 all: $(PDFS)
 
