@@ -1,0 +1,222 @@
+\documentclass[letter,10pt]{article}
+\usepackage[utf8]{inputenc}
+
+%\usepackage[showframe, top=0in, bottom=0.75in, left=0.75in, right=0.75in, includehead, includefoot]{geometry}
+\usepackage{calc}
+\usepackage{longtable}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{bibentry}
+\usepackage[numbers]{natbib}
+\usepackage{ifpdf}
+\usepackage{tablefootnote}
+\usepackage{multirow}
+\usepackage{makecell}
+\usepackage[table]{xcolor}
+\usepackage{xltabular}
+\usepackage[all]{nowidow}
+\usepackage{paralist}
+
+%====================
+% OFFICIAL PUBLIC OVERLEAF TEMPLATE
+% https://www.overleaf.com/latex/templates/data-science-tech-resume-template/zcdmpfxrzjhv
+% 
+%====================
+%
+% Resume template for data scientists, a complement to data-science-tech-cover-letter-template:
+% https://www.overleaf.com/latex/templates/data-science-tech-cover-letter-template/gbrcqktbsfxf
+%
+% Files:        resume.tex: Main file	
+%               _header.tex: header code
+%               TLCresume.sty: style file containing formatting details
+%               section/objective: https://www.indeed.com/career-advice/resumes-cover-letters/resume-objective-examples
+%               section/skills: table of skills
+%               section/experience: projects or roles
+%               section/education: schools and stuff
+%               section/activities: optional, could comment out in resume.tex.
+%
+% Editor:       https://github.com/TimmyChan 
+%               https://www.linkedin.com/in/timmy-l-chan/
+%               
+% Last Updated: March 24th, 2022
+%
+%====================
+
+
+% An itemize-style list with lots of space between items
+\newenvironment{outerlist}[1][\enskip\textbullet]%
+{\begin{itemize}[#1]}{\end{itemize}%
+	\vspace{-.6\baselineskip}}
+
+% An environment IDENTICAL to outerlist that has better pre-list spacing
+% when used as the first thing in a \section
+\newenvironment{lonelist}[1][\enskip\textbullet]%
+{\vspace{-\baselineskip}\begin{list}{#1}{%
+			\setlength{\partopsep}{0pt}%
+			\setlength{\topsep}{0pt}
+			\setlength{\leftmargin}{0pt}}}
+	{\end{list}\vspace{-.6\baselineskip}}
+
+% An itemize-style list with little space between items
+\newenvironment{innerlist}[1][\enskip\textbullet]%
+{\begin{compactitem}[#1]}{\end{compactitem}}
+
+\newenvironment{innerenum}[1][1.]%
+{\begin{compactenum}[#1]}{\end{compactenum}}
+
+% An environment IDENTICAL to innerlist that has better pre-list spacing
+% when used as the first thing in a \section
+\newenvironment{loneinnerlist}[1][\enskip\textbullet]%
+{\vspace{-\baselineskip}\begin{compactitem}[#1]}
+	{\end{compactitem}\vspace{-.6\baselineskip}}
+
+\newcounter{bibcounter}
+
+\newenvironment{biblist}[1][0]
+{
+	%	\vspace{-\baselineskip}
+	\begin{enumerate}[{[}1{]}]%
+%		\setcounter{enumi}{#1}
+%		\setlength{\labelwidth}{40pt}
+%		\setlength{\partopsep}{0pt}%
+%		\setlength{\topsep}{0pt}
+%		\setlength{\leftmargin}{0pt}
+}
+{
+%	\setcounter{bibcounter}{\theenumi}
+	\end{enumerate}
+	%	\vspace{-.6\baselineskip}
+}
+
+\newenvironment{classtab}[0]
+{\def\arraystretch{1.5}
+	\rowcolors{2}{gray!25}{white} 	
+	\center\xltabular{0.90\linewidth}{llXr}\toprule\rowcolor{white}
+	\multicolumn{1}{c}{\bf Year} &
+	\multicolumn{1}{c}{\bf Course Code} &
+	\multicolumn{1}{c}{\bf Course Title} &
+	\multicolumn{1}{c}{\bf Enrollment} \\ 
+	\midrule
+	\endhead
+}
+{\bottomrule
+	\endxltabular
+	\endcenter
+}
+
+\setcounter{footnote}{1}
+
+\usepackage{DLresume}
+
+%====================
+% CONTACT INFORMATION
+%====================
+\def\name{David Lie} % Name Here
+\def\phone{(416) 946-0251}
+\def\institution{University of Toronto}
+\def\address{10 King's College Rd. Toronto, ON Canada M5S 3G4}
+\def\email{david.lie@utoronto.ca}
+\def\homepage{https://security.csl.toronto.edu} % linkedin.com/in/______
+\def\role{Professor, University of Toronto} % JOB TITLE
+
+\input{_header}
+\begin{document}
+\thispagestyle{firststyle}
+\bibliographystyle{dl-cv}
+\nobibliography{cv}
+
+\section{Contact Information}
+%
+% NOTE: Mind where the & separators and \\ breaks are in the following
+%       table.
+%
+% ALSO: \rcollength is the width of the right column of the table
+%       (adjust it to your liking; default is 1.85in).
+%
+\newlength{\rcollength}\setlength{\rcollength}{3in}%
+%
+\begin{tabular}[t]{@{}p{\textwidth-\rcollength}p{\rcollength}}
+	\href{http://www.ece.toronto.edu/}%
+	{Dept. of Electrical and Computer Engineering} & \textit{Office:} (416) 946-0251 \\
+	\href{http://www.toronto.edu/}{University of Toronto}
+	&  \textit{E-mail:}
+	\href{mailto:david.lie@utoronto.ca}{david.lie@utoronto.ca} \\
+	10 King's College Road           & 	\textit{Web:} \href{https://security.csl.toronto.edu}{\url{https://security.csl.toronto.edu}}\\
+	Toronto, ON, Canada M5S 3G4    & \\
+\end{tabular}
+
+\section{Academic Appointments}
+\input{sections/academic_appointments}
+
+\section{Education}
+\input{sections/education}
+
+\section{Honors and Awards}
+\input{sections/awards}
+
+\section{Publications} 
+\subsection{Career Totals}
+\input{sections/pub_stats}
+\input{sections/pubs}
+
+\section{Student Supervision}
+\input{sections/student_stats}
+\subsection{Doctoral Students}
+\input{generated/new_phd_students}
+\input{generated/phd_footnotes}
+\subsection{Masters Students}
+\input{generated/new_ms_students}
+\input{generated/ms_footnotes}
+\subsection{Course Based Masters Student Projects}
+\input{generated/new_meng_students}
+\subsection{Postdoctoral Fellows}
+\input{generated/new_pdfs}
+\subsection{Research Associates}
+\input{sections/research_associates}
+\subsection[Undergraduate Students and Research Interns]{Undergraduate Students and Research Interns\protect\footnote{Research supervised undergraduate students only, senior year capstone course students are not recorded.}}
+\input{generated/new_ug_students}
+
+\section{Teaching}
+\subsection{Graduate Courses Taught}
+\input{generated/grad_teaching}
+\subsection{Graduate Course Development}
+\input{sections/grad_course_development}
+\subsection{Undergraduate Courses Taught}
+\input{generated/ug_teaching}
+\subsection{Undergraduate Course Development}
+\input{sections/undergraduate_course_development}
+\input{sections/talks}
+
+\section{Professional Activities}
+\subsection{Journal Editorial Roles}
+\input{sections/journal_editorial_roles}
+\subsection{Technical Program Committee Chairs}
+\input{sections/tpc_chairs}
+\subsection{Technical Program Committees}
+\input{generated/TPCs}
+\subsection{Event Organization}
+\input{sections/event_organization}
+
+\subsection{Funding Panels and Reviews}
+\input{sections/funding_reviews}
+\subsection{National Leadership}
+\input{sections/national_leadership}
+\subsection{Professional Societies and Memberships}
+\input{sections/professional_membership}
+
+\section{University Service}
+\input{sections/university_service}
+\subsection{Major Service Roles}
+\input{sections/university_major_service}
+
+\section{Research Support}
+\subsection{Career Totals}
+\input{sections/funding_stats}
+\input{sections/research_support}
+
+\section{Collaborators in the last 2 years}
+\input{generated/collabs.tex}
+
+\section{Other Positions Held}
+\input{sections/other}
+\end{document}

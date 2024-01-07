@@ -1,0 +1,1000 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%% Simple LaTeX CV Template %%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% NOTE: If you find that it says                                     %%
+%%                                                                    %%
+%%                           1 of ??                                  %%
+%%                                                                    %%
+%% at the bottom of your first page, this means that the AUX file     %%
+%% was not available when you ran LaTeX on this source. Simply RERUN  %%
+%% LaTeX to get the ``??'' replaced with the number of the last page  %%
+%% of the document. The AUX file will be generated on the first run   %%
+%% of LaTeX and used on the second run to fill in all of the          %%
+%% references.                                                        %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Document Setup %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Don't like 10pt? Try 11pt or 12pt
+\documentclass[10pt]{article}
+
+% This is a helpful package that puts math inside length specifications
+\usepackage{calc}
+\usepackage{longtable}
+\usepackage{tabularx}
+%\usepackage{booktabs}
+\usepackage{bibentry}
+\usepackage[numbers]{natbib}
+\usepackage{ifpdf}
+\usepackage{tablefootnote}
+\usepackage{multirow}
+\usepackage{makecell}
+
+
+
+%\usepackage{multibib}
+%\newcites{conferences,journals,other,patents}
+%{Refereed Conference Publications,
+%Refereed Journal Publications,%
+%Non-refereed Publications,%
+%Patents Filed}
+
+% Simpler bibsection for CV sections
+% (thanks to natbib for inspiration)
+\makeatletter
+\makeatother
+
+% Layout: Puts the section titles on left side of page
+\reversemarginpar
+
+%
+%         PAPER SIZE, PAGE NUMBER, AND DOCUMENT LAYOUT NOTES:
+%
+% The next \usepackage line changes the layout for CV style section
+% headings as marginal notes. It also sets up the paper size as either
+% letter or A4. By default, letter was used. If A4 paper is desired,
+% comment out the letterpaper lines and uncomment the a4paper lines.
+%
+% As you can see, the margin widths and section title widths can be
+% easily adjusted.
+%
+% ALSO: Notice that the includefoot option can be commented OUT in order
+% to put the PAGE NUMBER *IN* the bottom margin. This will make the
+% effective text area larger.
+%
+% IF YOU WISH TO REMOVE THE ``of LASTPAGE'' next to each page number,
+% see the note about the +LP and -LP lines below. Comment out the +LP
+% and uncomment the -LP.
+%
+% IF YOU WISH TO REMOVE PAGE NUMBERS, be sure that the includefoot line
+% is uncommented and ALSO uncomment the \pagestyle{empty} a few lines
+% below.
+%
+
+%% Use these lines for letter-sized paper
+\usepackage[paper=letterpaper,
+            %includefoot, % Uncomment to put page number above margin
+            marginparwidth=1.2in,     % Length of section titles
+            marginparsep=.05in,       % Space between titles and text
+            margin=1in,               % 1 inch margins
+            includemp]{geometry}
+
+%% Use these lines for A4-sized paper
+%\usepackage[paper=a4paper,
+%            %includefoot, % Uncomment to put page number above margin
+%            marginparwidth=30.5mm,    % Length of section titles
+%            marginparsep=1.5mm,       % Space between titles and text
+%            margin=25mm,              % 25mm margins
+%            includemp]{geometry}
+
+%% More layout: Get rid of indenting throughout entire document
+\setlength{\parindent}{0in}
+
+%% This gives us fun enumeration environments. compactitem will be nice.
+\usepackage{paralist}
+
+%% Reference the last page in the page number
+%
+% NOTE: comment the +LP line and uncomment the -LP line to have page
+%       numbers without the ``of ##'' last page reference)
+%
+% NOTE: uncomment the \pagestyle{empty} line to get rid of all page
+%       numbers (make sure includefoot is commented out above)
+%
+\usepackage{fancyhdr,lastpage}
+\pagestyle{fancy}
+%\pagestyle{empty}      % Uncomment this to get rid of page numbers
+\fancyhf{}\renewcommand{\headrulewidth}{0pt}
+\fancyfootoffset{\marginparsep+\marginparwidth}
+\newlength{\footpageshift}
+\setlength{\footpageshift}
+          {0.5\textwidth+0.5\marginparsep+0.5\marginparwidth-2in}
+\lfoot{\hspace{\footpageshift}%
+       \parbox{4in}{\, \hfill %
+                    \arabic{page} of \protect\pageref*{LastPage} % +LP
+%                    \arabic{page}                               % -LP
+                    \hfill \,}}
+
+% Finally, give us PDF bookmarks
+\usepackage[hyperfootnotes=true]{hyperref}
+\ifpdf
+\usepackage{color}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.4}
+\hypersetup{colorlinks,breaklinks,
+            linkcolor=darkblue,urlcolor=darkblue,
+            anchorcolor=darkblue,citecolor=darkblue}
+\else
+\fi
+
+\setcounter{footnote}{1}
+
+%%%%%%%%%%%%%%%%%%%%%%%% End Document Setup %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%% Helper Commands %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% The title (name) with a horizontal rule under it
+%
+% Usage: \makeheading{name}
+%
+% Place at top of document. It should be the first thing.
+\newcommand{\makeheading}[1]%
+        {\hspace*{-\marginparsep minus \marginparwidth}%
+         \begin{minipage}[t]{\textwidth+\marginparwidth+\marginparsep}%
+                {\large \bfseries #1}\\[-0.15\baselineskip]%
+                 \rule{\columnwidth}{1pt}%
+         \end{minipage}}
+
+% The section headings
+%
+% Usage: \section{section name}
+%
+% Follow this section IMMEDIATELY with the first line of the section
+% text. Do not put whitespace in between. That is, do this:
+%
+%       \section{My Information}
+%       Here is my information.
+%
+% and NOT this:
+%
+%       \section{My Information}
+%
+%       Here is my information.
+%
+% Otherwise the top of the section header will not line up with the top
+% of the section. Of course, using a single comment character (%) on
+% empty lines allows for the function of the first example with the
+% readability of the second example.
+\renewcommand{\section}[2]%
+        {\pagebreak[2]\vspace{1.3\baselineskip}%
+         \phantomsection\addcontentsline{toc}{section}{#1}%
+         \hspace{0in}%
+         \marginpar{
+         \raggedright \scshape #1}#2}
+
+% An itemize-style list with lots of space between items
+\newenvironment{outerlist}[1][\enskip\textbullet]%
+        {\begin{itemize}[#1]}{\end{itemize}%
+         \vspace{-.6\baselineskip}}
+
+% An environment IDENTICAL to outerlist that has better pre-list spacing
+% when used as the first thing in a \section
+\newenvironment{lonelist}[1][\enskip\textbullet]%
+        {\vspace{-\baselineskip}\begin{list}{#1}{%
+        \setlength{\partopsep}{0pt}%
+        \setlength{\topsep}{0pt}
+	\setlength{\leftmargin}{0pt}}}
+        {\end{list}\vspace{-.6\baselineskip}}
+
+% An itemize-style list with little space between items
+\newenvironment{innerlist}[1][\enskip\textbullet]%
+        {\begin{compactitem}[#1]}{\end{compactitem}}
+
+\newenvironment{innerenum}[1][1.]%
+        {\begin{compactenum}[#1]}{\end{compactenum}}
+
+% An environment IDENTICAL to innerlist that has better pre-list spacing
+% when used as the first thing in a \section
+\newenvironment{loneinnerlist}[1][\enskip\textbullet]%
+        {\vspace{-\baselineskip}\begin{compactitem}[#1]}
+        {\end{compactitem}\vspace{-.6\baselineskip}}
+
+\newcounter{bibcounter}
+
+\newenvironment{biblist}[1][0]
+        {
+%	\vspace{-\baselineskip}
+	\begin{enumerate}[{[}1{]}]%
+	\setcounter{enumi}{#1}
+	\setlength{\labelwidth}{40pt}
+        \setlength{\partopsep}{0pt}%
+        \setlength{\topsep}{0pt}
+	\setlength{\leftmargin}{0pt}
+	}
+        {
+	\setcounter{bibcounter}{\theenumi}
+	\end{enumerate}
+%	\vspace{-.6\baselineskip}
+	}
+
+
+% To add some paragraph space between lines.
+% This also tells LaTeX to preferably break a page on one of these gaps
+% if there is a needed pagebreak nearby.
+\newcommand{\blankline}{\quad\pagebreak[2]}
+
+% Uses hyperref to link DOI
+\newcommand\doilink[1]{\href{http://dx.doi.org/#1}{#1}}
+\newcommand\doi[1]{doi:\doilink{#1}}
+
+\newcolumntype{R}{>{\raggedleft\arraybackslash}p{30pt}}
+
+%%%%%%%%%%%%%%%%%%%%%%%% End Helper Commands %%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%% Begin CV Document %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\makeheading{David Lie}
+\bibliographystyle{dl-cv}
+\nobibliography{cv}
+
+\section{Contact Information}
+%
+% NOTE: Mind where the & separators and \\ breaks are in the following
+%       table.
+%
+% ALSO: \rcollength is the width of the right column of the table
+%       (adjust it to your liking; default is 1.85in).
+%
+\newlength{\rcollength}\setlength{\rcollength}{2.5in}%
+%
+\begin{tabular}[t]{@{}p{\textwidth-\rcollength}p{\rcollength}}
+\href{http://www.ece.toronto.edu/}%
+     {Dept. of Electrical and Computer Engineering} & \textit{Office:} (416) 946-0251 \\
+\href{http://www.toronto.edu/}{University of Toronto}
+  &  \textit{Fax:} (416) 971-2326 \\
+10 King's College Road           & \textit{E-mail:}
+\href{mailto:lie@eecg.toronto.edu}{lie@eecg.toronto.edu}\\
+Toronto, ON, Canada M5S 3G4    & 
+\href{http://www.eecg.toronto.edu/~lie}{\url{https://security.csl.toronto.edu}}\\
+\end{tabular}
+
+\section{Academic Appointments}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{lonelist}
+\item[] Professor, Department of Electrical and Computer Engineering, University of Toronto  \begin{flushright} {\bf 07/2016--Present} \end{flushright}
+\item[] Associate Professor, Department of Electrical and Computer Engineering, University of Toronto \hfill {\bf 07/2009--07/2016}
+\item[] Assistant Professor, Department of Electrical and Computer
+Engineering, University of Toronto \hfill {\bf 08/2003--06/2009}
+\item[] Cross-Appointment, Computer Science, University of Toronto
+\hfill{\bf 09/2003--Present}
+\item[] Cross-Appointment, Faculty of Law, University of Toronto
+\hfill{\bf 07/2019--Present}
+\item[] Research Leadership Team, Schwartz Reisman Institute for Technology and Society, University of Toronto
+\hfill{\bf 01/2020--Present}
+\end{lonelist}
+
+\section{Education}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{lonelist}
+\item[] Doctor of Philosophy, Department of Electrical Engineering, Stanford University, 2004
+\begin{innerlist}
+\item Supervisor: Mark Horowitz 
+\item Thesis: \href{https://security.csl.toronto.edu/wp-content/uploads/2018/06/dl_thesis.pdf}{\em Architectural Support for Copy and Tamper-Resistant Software}
+\end{innerlist}
+\item[] Master of Science, Department of Electrical Engineering, Stanford University, 2001 
+\item[] Bachelor of Applied Science, Division of Engineering Science, University of Toronto, 1998
+\begin{innerlist}
+\item Supervisor: Michael Stumm
+\item Thesis: {\em Porting the Spash-2 Suite to Tornado}
+\end{innerlist}
+\end{lonelist}
+%
+
+\section{Honors and Awards}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%55%
+\begin{lonelist}
+	\item[] Senior Massey College Fellow, 2021-
+	\item[] Best Paper Award, The SIG SIDAR Conference on Detection of Intrusions and Malware \& Vulnerability Assessment (DIMVA), 2021
+	\item[] Canada Research Chair in Secure and Reliable Computer Systems (Tier 1), 2020-
+	\item[] Schwartz Reisman Institute for Technology and Society Research Lead, 2020-
+	\item[] Connaught Scholar, 2017-2019
+	\item[] The Canada Research Chair in Secure and Reliable Computer Systems (Tier 2), 2013-2018
+	\item[] The Ontario Ministry of Research and Innovation Early Researcher Award (ERA), 2008
+	\item[] New Opportunities Fund Award, Canadian Foundation for Innovation (CFI), 2005
+	\item[] Best Paper Award, The 19th ACM Symposium on Operating Systems Principles (SOSP), 2003
+\end{lonelist}
+
+
+%\section{Major Research Projects}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{lonelist}
+%\newlength{\lcollyearlength}\setlength{\lcollyearlength}{20pt}%
+%%
+%\item[]
+%\begin{longtable}[h]{@{}p{\lcollyearlength}p{\textwidth-\lcollyearlength-10pt}}
+%2016-- & {\bf Intersections of Law, Policy and Digital Privacy:} Multi-disciplinary project led by David Lie that includes PIs from Law, Engineering, Computer Science and Rotman.  Goal is to improve the integration of technology with policy, law and business in the areas of privacy and data governance. \\
+%2016-- & {\bf Applications of Machine Learning to Security:} Improved compute power and advances in GPU hardware have enabled the production of very large deep learning models that are able to exceed previous machine learning methods and in some cases, even human experts.  We are actively exploring applications of machine learning to malware detection, vulnerability detection and digital privacy analysis. \\
+%2016-- & {\bf Embedded and IoT System Vulnerability Analysis:} We are investigating code analysis techniques to perform both dynamic and static analysis of the software running on embedded and Internet of Things (IoT) devices to detect vulnerabilities and malicious code. \\
+%2010-- & {\bf Mobile Phone Security:} The growing power of mobile phones or "smart phones" has led to their use in many new applications, such as financial transactions, health monitoring and social networking.  We explore the implications of this on the privacy and security of individuals and on the security of our compute infrastructure. \\
+%2012--2018 & {\bf Cloud Security:} In this project, ways to increase the security of IaaS clouds.  We will examine the protection of computations performed, as well as data stored in public clouds.  A key component of this project is also security Internet infrastructure, which includes improving the security and reliabilty of routers and embedded Internet-of-things devices. \\
+%2008--2010 & {\bf Concurrency Bug Prevention in Multi-core Processors:} With multi-core processors being the standard processor architecture today, software developers must now contend with writing concurrent code, which is notoriously difficult to debug.  Rather than tackle the difficult task of finding all bugs, we take the approach of detecting and mitigating the effects of those bugs at run time. \\
+%2005--2009 & {\bf Using Multi-cores to Increase Security:} In this project, we leverage the trend towards chip multiprocessors to employ redundancy and diversity to improve the security of systems \\
+%2005-2008 & {\bf Formal Verification Techniques for Security:} We investigate formal verification techniques with the specific goal of finding security vulnerabilities in source code.  The techniques will balance the often conflicting goals of soundness and completeness, with an emphasis towards finding bugs in real security critical applications.  In collaboration with Dr. Marsha Chechik.  \\
+%2003--2010 & {\bf Secure Operating Systems through Virtual Machine Monitors:} With the low cost of computing, Virtual Machine Monitors have become common place, allowing us to run multiple operating systems on a single machine.  This project leverages this to explore new operating system structures to create more secure and reliable systems. \\
+%2000--2004 & {\bf Execute Only Memory (XOM):} This project explores techniques to protect intellectual property by creating hardware that supports copy and tamper-resistant software.  This project proposed processor modifications, operating system support, and demonstrated a computer aided formal verification for the system.  This project has resulted in three papers with a total of over 600 citations
+%\end{longtable}
+%\end{lonelist}
+
+\section{Publications} 
+%\nociteconferences{mannan:ccs2011,au:spsm2011,litty:vee2011,mannan:fc2011,lie:stc2010,gill:sec2010,chew:eurosys2010,litty:hotos2009,hart:ASE2008,hart:ASE2008tools}
+%\nociteconferences{hart:hotsec2008,litty:sec2008,lie:ASE2007,lie:hotsec2007,lie:hotos2007,lie:osdi2006,lie:asid2006,lie:vee2006,lie:sosp2003,lie:oakland2003,lie:isca2001,lie:jvm2001,lie:asplos_xom} 
+%\nociteconferences{*}
+%\bibliographystyleconferences{plainyr-rev}
+%\bibliographyconferences{conferences}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{lonelist}
+\item[] {\bf Refereed Conference Publications} 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{biblist}
+\item \bibentry{jwang:neurips2022:monte_carlo}
+\item \bibentry{bkim:atc2022:modulo}
+\item \bibentry{mwong:asiaccs2022:car}
+\item \bibentry{syang:amobile2021:accel_analysis}
+\item \bibentry{wcao:usenixsec2021:privadroid}
+\item \bibentry{whuang:dimva2021:aion}
+\item \bibentry{bourtoule:oakland2021:unlearning}
+\item \bibentry{sxu:asplos2021:ifp}
+\item \bibentry{rcui:ndss2021:emilia}
+\item \bibentry{pustogarov:oakland2020:easier}
+\item \bibentry{shuang:apsys2019:aint}
+\item \bibentry{zhuang:oakland2019:senx}
+\item \bibentry{whuang:systex2018:pearl_tee}
+\item \bibentry{mwong:usenixsec2018:tiro}
+\item \bibentry{bittau:sosp2017}
+\item \bibentry{bhkim:hotos2017}
+\item \bibentry{lie:hotos2017}	
+\item \bibentry{whuang:acsac2016}
+\item \bibentry{zhuang:oakland2016}
+\item \bibentry{mwong:ndss2016}
+\item \bibentry{bkim:oakland2015}
+\item \bibentry{zwei:spsm2014}
+\item \bibentry{jhuang:dsn2014}
+\item \bibentry{ganjali:stc2012}
+\item \bibentry{au:ccs2012}
+\item \bibentry{kim:ccsw2012}
+\item \bibentry{mannan:ccs2011}
+\item \bibentry{au:spsm2011}
+\item \bibentry{litty:vee2011}
+\item \bibentry{mannan:fc2011}
+\item \bibentry{lie:stc2010}
+\item \bibentry{gill:sec2010}
+\item \bibentry{chew:eurosys2010}
+\item \bibentry{litty:hotos2009}
+\item \bibentry{hart:ASE2008}
+\item \bibentry{hart:ASE2008tools}
+\item \bibentry{hart:hotsec2008}
+\item \bibentry{litty:sec2008}
+\item \bibentry{lie:ASE2007}
+\item \bibentry{lie:hotsec2007}
+\item \bibentry{lie:hotos2007}
+\item \bibentry{lie:osdi2006}
+\item \bibentry{lie:asid2006}
+\item \bibentry{lie:vee2006}
+\item \bibentry{lie:sosp2003}
+\item \bibentry{lie:oakland2003}
+\item \bibentry{lie:isca2001}
+\item \bibentry{lie:jvm2001}
+\item \bibentry{lie:asplos_xom} 
+\end{biblist}
+
+\item[] {\bf Refereed Journal Publications}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\nocitejournals{*}
+%\bibliographystylejournals{plainyr-rev}
+%\bibliographyjournals{journals}
+
+\begin{biblist}[\thebibcounter]
+\item \bibentry{mchung_chignell:csur:2023}
+\item \bibentry{lie:utlj2021:automated_accountability}
+\item \bibentry{austin:surveillance_society2021:sidewalklabs}
+\item \bibentry{zhuang:login2020:senx}
+\item \bibentry{lzhao:ieeesp2020:firmwareization}
+\item \bibentry{austin:nyu2020}
+\item \bibentry{whuang:csur2015}
+\item \bibentry{messer:ieeetoc2004}
+\end{biblist}
+%
+\item[] {\bf Patents}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\nocitepatents{*}
+%\bibliographystylepatents{plainyr-rev}
+%\bibliographypatents{patents}
+\begin{biblist}[\thebibcounter]
+\item \bibentry{lie:enomaly}
+\item \bibentry{lie:retailbridge}
+\item \bibentry{miyani:telus}
+\end{biblist}
+%
+\item[] {\bf Other Publications}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\nociteother{*}
+%\bibliographystyleother{plainyr-rev}
+%\bibliographyother{other}
+
+\begin{biblist}[\thebibcounter]
+\item \bibentry{austin:ssrn2021:online_harms}
+\item \bibentry{austin:torontostar2020:covid_alert}
+\item \bibentry{austin:tr:covid-19}	
+\item \bibentry{austin:apptrans2018}
+\item \bibentry{hart:tr2008}
+\item \bibentry{lie:phd2003}
+\item \bibentry{messer:tr2001}
+\item \bibentry{lie:tr2000}
+\end{biblist}
+\end{lonelist}
+
+\section{Student Supervision}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{lonelist}
+\item[] {\bf Doctoral Students}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item[]
+\newlength{\namelength}\setlength{\namelength}{70pt}
+\newlength{\datelength}\setlength{\datelength}{80pt}
+\input{generated/phd_students}
+\input{generated/phd_footnotes}
+
+\item[] {\bf Masters Students}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setlength{\namelength}{70pt}
+\setlength{\datelength}{80pt}
+%\item[]
+%\begin{longtable}[h]{|p{\namelength}|p{\textwidth-\namelength-\datelength-30pt}|p{\datelength}|} \hline
+%\multicolumn{1}{|c|}{\bf Name} &
+%\multicolumn{1}{|c|}{\bf Thesis Title} &
+%\multicolumn{1}{|c|}{\bf Dates \& } \\ 
+%\multicolumn{1}{|c|}{\bf } &
+%\multicolumn{1}{|c|}{\bf } & 
+%\multicolumn{1}{|c|}{\bf Last Pos.} \\ \hline \hline
+\input{generated/ms_students}
+%\end{longtable}
+
+\input{generated/ms_footnotes}
+
+\item[] {\bf Postdoctoral Fellows}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setlength{\namelength}{100pt}
+\setlength{\datelength}{100pt}
+%\begin{longtable}[h]{|p{\namelength}|p{\datelength}|p{\textwidth-\datelength-\datelength-30pt}|} \hline
+%\multicolumn{1}{|c|}{\bf Name} &
+%\multicolumn{1}{|c|}{\bf Dates} &  
+%\multicolumn{1}{|c|}{\bf Current Position} \\ 
+%\hline
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Lianying (Viau) Zhao & 09/18--7/19 & Carleton Univ.\\ \hline
+%Ivan Pustogarov & 01/18--04/21 & Concordia Univ. \\ \hline
+%Mohammed Mannan & 07/09--07/11 & Concordia Univ. \\ \hline
+\input{generated/pdfs}
+%\end{longtable}
+
+\item[] {\bf Research Associates}
+\begin{longtable}[h]{|p{\textwidth-\datelength-30pt}|p{\datelength}|} \hline
+\multicolumn{1}{|c|}{\bf Name} &
+\multicolumn{1}{|c|}{\bf Dates} \\ \hline \hline
+Wei Huang& 09/2013--05/2015 \\ \hline
+Michelle Wong& 01/2015--05/2015 \\ \hline
+\end{longtable}
+\end{lonelist}
+
+\section{Teaching}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%55%
+\begin{lonelist}
+\item[] {\bf Graduate Courses}
+\vspace{-8pt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%55%
+\begin{longtable}[h]{|l|l|p{190pt}|r|} \hline
+\multicolumn{1}{|c|}{\bf Year} &
+\multicolumn{1}{|c|}{\bf Course Code} &
+\multicolumn{1}{|c|}{\bf Course Title} &
+\multicolumn{1}{|c|}{\bf Enrollment} \\ \hline \hline
+2004 & ECE1724 & Computer Security, Cryptography and Privacy & 19 \\ \hline
+2004 & ECE1776 & Computer Security, Cryptography and Privacy & 23 \\ \hline
+2005 & ECE1776 & Computer Security, Cryptography and Privacy & 22 \\ \hline
+2006 & ECE1776 & Computer Security, Cryptography and Privacy & 18 \\ \hline
+2008 & ECE1776 & Computer Security, Cryptography and Privacy & 20 \\ \hline
+2009 & ECE1724 & Industry Perspectives on Practical Problems in Computer Security & 7 \\ \hline
+2010 & ECE1776 & Computer Security, Cryptography and Privacy & 8 \\ \hline
+2011 & ECE1776 & Computer Security, Cryptography and Privacy & 20 \\ \hline
+2013 & ECE1776 & Computer Security, Cryptography and Privacy & 9 \\ \hline
+2014 & ECE1776 & Computer Security, Cryptography and Privacy & 9 \\ \hline
+2014 & ECE1776 & Computer Security, Cryptography and Privacy & 11 \\ \hline
+2016 & ECE1776 & Computer Security, Cryptography and Privacy & 15 \\ \hline
+2017 & ECE1776 & Computer Security, Cryptography and Privacy & 23 \\ \hline
+2018 & ECE1776 & Computer Security, Cryptography and Privacy & 32 \\ \hline
+2019 & ECE1776 & Computer Security, Cryptography and Privacy & 26 \\ \hline
+2020 & ECE1776 & Computer Security, Cryptography and Privacy & 16 \\ \hline
+\end{longtable}
+\item[] {Graduate Course Development}
+\begin{innerlist}
+\item[] {\bf ECE1776:} This is a new course that I developed for the graduate curriculum at the University of Toronto in 2004.  Because graduate students arrive with differing levels of experience, this graduate course gave basics and background in computer security as well as introducing students to the most current research.  The course contains lecture material, written assignments and programming assignments, oral presentations, and an independent project component. With the introduction of ECE568 in 2009, the course has now become more specialized on current academic research in security.
+\item[] {\bf ECE1724 Industry Perspectives on Practical Problems in Computer Security:} Experimental course co-taught with Adjunct Professor Richard Reiner who has over a decade of experience in the computer security industry.  The course will educate students on practical aspects of computer security from the point of view of an industry practitioner.
+\end{innerlist}
+
+\item[] {\bf Undergraduate Courses}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%55%
+\begin{longtable}[h]{|l|l|p{190pt}|r|} \hline
+\multicolumn{1}{|c|}{\bf Year} &
+\multicolumn{1}{|c|}{\bf Course Code} &
+\multicolumn{1}{|c|}{\bf Course Title} &
+\multicolumn{1}{|c|}{\bf Enrollment} \\ \hline \hline
+2003 & ECE341 & Computer Organization & 89 \\ \hline
+2004 & ECE341 & Computer Organization & 67 \\ \hline
+2006 & ECE468 & Computer Security & 123 \\ \hline
+2006 & ECE352 & Computer Organization & 37 \\ \hline
+2007 & ECE468 & Computer Security & 68 \\ \hline
+2007 & ECE352 & Computer Organization & 30 \\ \hline
+2008 & ECE468 & Computer Security & 78 \\ \hline
+2011 & ECE568 & Computer Security & 63 \\ \hline
+2011 & ECE353 & Systems Software & 50 \\ \hline
+2011 & ECE344 & Operating Systems & 88 \\ \hline
+2013 & ECE353 & Systems Software & 61 \\ \hline
+2015 & ECE568 & Computer Security & 155 \\ \hline
+2015 & ECE568 & Computer Security & 67 \\ \hline
+2017 & ECE568 & Computer Security & 89 \\ \hline
+2018 & ECE568 & Computer Security & 67 \\ \hline
+2019 & ECE568 & Computer Security & 74 \\ \hline
+2020 & ECE568 & Computer Security & 68 \\ \hline
+\end{longtable}
+\item[] {Undergradaute Course Development}
+\begin{innerlist}
+\item[] {\bf ECE468/ECE568}: This is a new senior level course that I developed for the undergraduate curriculum at the University of Toronto in 2006.  The course covers practical and theoretical aspects of computer security to help senior students prepare for security related employment and/or graduate studies.  I could not find a text book that covers both theory and practice in computer security adequately, so I took it upon myself to develop all the material for the course.  A comprehensive set of lecture notes were made in the form of slides and is distributed to the students each year in lieu of a course text.
+
+The course material contains 4 written assignments (which are changed every year), 4 major programming labs introducing students to software vulnerabilities and network security, and lecture notes.  The labs involved the development and installation of a virtual machine infrastructure on the undergraduate computing labs (ECF), as well as a fake website with security vulnerabilities that students could use to practice identifying and fixing security problems.  
+
+Materials developed in this course are being used in ``Introduction to
+Information Security'' (CS347) at the University of Toronto
+Mississauga Campus.  Recently the course has been made into a 500
+level course, thus making it available to first year Masters students
+who did not have such a course available to them at their
+undergraduate institution.
+
+In 2015, the course material was updated to include more web security content, federated identity mobile security and cloud security to reflect changing trends in security.
+
+\item[] {\bf Curriculum Development:} I helped build a flow chart of undergraduate computer group courses in the curriculum review conducted in 2004-2005.
+\end{innerlist}
+\end{lonelist}
+
+\section{Scholarly Addresses}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{lonelist}
+\item[] {\bf Conference Presentations}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{innerenum}
+\item {\em Glimmers: Resolving the Privacy/Trust Quagmire.} 16th Workshop on Hot Topics in Operating Systems. 2017.
+\item {\em Using hypervisors to secure commodity operating systems.} 5th Workshop on Scalable Trusted Computing. 2010.
+\item {\em Security Benchmarking using Partial Verification.} Hot Topics in Security (HotSec). 2008.
+\item {\em Quantifying the Strength of Security Systems.} Hot Topics in Security (HotSec). 2007.
+\item {\em Splitting Interfaces: Making Trust between Operating Systems and Applications Configurable.} Operating Systems Development and Implementation (OSDI). 2006.
+\item {\em Using VMM-based Sensors to Monitor Honeypots.} Virtual Execution Environments (VEE). 2006.
+\item {\em Implementing an Untrusted Operating System on Trusted Hardware.} Symposium on Operating Systems Principles (SOSP). 2003.
+\item {\em Specifying and Verifying Hardware for Tamper-Resistant Software.} IEEE Symposium on Security and Privacy (Oakland). 2003.
+\item {\em A Simple Method for Extracting Models from Protocol Code.} International Symposium on Computer Architecture (ISCA). 2001.
+\item {\em Architectural Support for Copy and Tamper-Resistant Software.} Architectural Support for Programming Languages and Operating Systems (ASPLOS). 2000.
+\end{innerenum}
+
+\item[] {\bf Invited Lectures}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{innerenum}
+\item \textit{Cybersecurity, Society and You.}, Massey Dialog, Canada, 2021.
+\item \textit{Containing COVID-19? There's An App for That.}, The Agenda with Steve Paiken, Toronto, Canada, 2020.
+\item \textit{A Look at Security and Privacy on Smartphones.}, Schwartz-Reisman Seminar, Toronto, Canada, 2020.
+\item \textit{Android Malware Analysis using Targeted Execution.}, King's College University, London, UK, 2019.
+\item \textit{Android Malware Analysis using Targeted Execution.}, National University of Singapore, Singapore, 2019.
+\item \textit{The Role of Hardware in Trustworthy Computing.}, Huawei, Singapore, 2019.
+\item \textit{Security Research Overview.}, Office of the Privacy Commissioner of British Columbia, BC, 2019.	
+\item \textit{Tools for Analyzing Android Malware.}, Google Greenhat-ASLR workshop, Mountain View, CA, 2018.
+\item {\em SmartPhone Security: Challenges and Opportunities.}, KAIST University, Korea, 2018.
+\item {\em Architectural Support for Secure Software.}, Huawei Strategy and Technology Workshop (STW), Huawei Global Headquarters in ShenZhen, 2018.
+\item {\em Glimmers: Resolving the Privacy/Trust Quagmire.}, Menlo Security, Palo Alto, CA, 2017.
+\item {\em  SmartPhone Security: Challenges and Opportunities.}, Tsinghua University, Beijing, China, 2016.
+\item {\em Recent Advances in Cloud and Smartphone Security.}, Huawei, Beijing, China, 2016.
+\item {\em Using Smartphones to Improve Security: New Capabilities and Challenges.}, Concordia University, Montreal, 2016.
+\item {\bf Distinguished Lecture:} {\em SmartPhones and Security: New Capabilities and New Challenges.}, University of British Columbia, Vancouver, 2016.
+\item {\em Using Smartphones to Improve Security: New Capabilities and Challenges.}, Qualcomm Research, Sunnyvale, CA,  2015.
+\item {\em Using Smartphones to Improve Security: New Capabilities and Challenges.}, Google, Mountain View, CA, 2015.
+\item {\em Static Analysis and Machine Learning for Security and Configuration Management}, University of Waterloo, Waterloo, 2014
+\item {\em Using Smartphones to Improve Security: New Capabilities and Challenges.}, UT Austin, Austin, TX, 2012
+\item {\em Panel: Security Implications of Android: a ``Closed System, Open Software'' Mobile Platform}, The 1st Workshop on Security and Privacy in Smartphones and Mobile Devices ({SPSM}), CCS Conferece, Chicago, IL, 2011
+\item {\em Unicorn: Two-Factor Attestation for Data Security} Eastern Great Lakes Systems and Networking Workshop, Buffalo, NY, 2011
+\item {\em Hypervisors meet Web 2.0.} The Vancouver Systems Symposium at UBC, Vancouver, BC, 2010.
+\item {\em Using Hypervisors to Secure Commodity Operating Systems.} STC Workshop, CCS Conference, Chicago, IL, 2010.
+\item {\em P2: Patch Auditing in the Cloud.} VMware, Palo Alto, CA. 2010.
+\item {\em Computing in the Iron Cloud: Security in Cloud Computing.}	IBM T.J. Watson Labs, MY, 2009.
+\item {\em Recent Advances in VMM Support for Security.} SecTor Conference, Toronto, 2007.
+\item {\em Securing Commodity Systems using Virtual Machines.} VMworld Conference, San Francisco, 2007.
+\item {\em Expert Panel: A Ten-Year Outlook for Internet Security and Privacy.} IEEE International Parallel \& Distributed Processing Symposium (IPDPS), Toronto, 2007.
+\item {\em Splitting Interfaces: Making Trust between Operating Systems and Applications Configurable.} Microsoft Research SVC, Mountain View, CA, 2006.
+\item {\em Splitting Interfaces: Making Trust between Operating Systems and Applications Configurable.} VMware, Palo Alto, CA, 2006.
+\item {\em Splitting Interfaces: Making Trust between Operating Systems and Applications Configurable.} Microsoft Research, Seattle, WA, 2006.
+\item {\em Splitting Interfaces: Making Trust between Operating Systems and Applications Configurable.} Ontario Institute of Tech, Oshawa, 2006.
+\item {\em Reducing the TCB.}	MITACS Conference, 2005.
+\item {\em Reducing the TCB.} Carleton University, 2005.
+\item {\em A Hypervisor-Based Intrusion Detection System.} IBM T.J. Watson Labs, 2004.
+\item {\em A Hypervisor-Based Intrusion Detection System.} HP Labs, 2004.
+\item {\em A Hypervisor-Based Intrusion Detection System.} Microsoft Research SVC, 2004.
+\item {\em Implementing an Untrusted Operating System on Trusted Hardware.} Stanford University, 2003.
+\item {\em Implementing an Untrusted Operating System on Trusted Hardware.} Microsoft Research SVC, 2003.
+\item {\em Architectural Support for Copy and Tamper-Resistant Software.} Intel, 2003.
+\item {\em Architectural Support for Copy and Tamper-Resistant Software.} University of Toronto, 2003.
+\item {\em Architectural Support for Copy and Tamper-Resistant Software.} University of Illinois at Urbana-Champagne, 2003.
+\item {\em Architectural Support for Copy and Tamper-Resistant Software.} University of British Columbia, 2003.
+\item {\em Architectural Support for Copy and Tamper-Resistant Software.} Microsoft Research SVC, 2003.
+\item {\em A Simple Method for Extracting Models from Protocol Code.} Compaq Systems Research Lab, 2001.
+\item {\em Architectural Support for Copy and Tamper-Resistant Software.} Microsoft Research, 2000.
+\item {\em Architectural Support for Copy and Tamper-Resistant Software.} University of Washington, 2000.
+\end{innerenum}
+\end{lonelist}
+
+\section{Professional Activities}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{lonelist}
+\item[] {\bf Journal Editorial Roles}
+\begin{innerenum}
+\item IEEE Transactions on Cloud Computing, Associate Editor, (2012--2016)
+\end{innerenum}
+
+\item[] {\bf Technical Program Committee Chairs}
+\begin{innerenum}
+\item 5th Annual ACM CCS Workshop on Security and Privacy in Smartphones and Mobile Devices (SPSM 2015)
+\end{innerenum}
+
+\item[] {\bf Technical Program Committees}
+\begin{innerenum}
+\item The 32nd Usenix Security Symposium (2023)
+\item The 44th IEEE Symposium on Security and Privacy (Oakland 2023)
+\item The 31st Usenix Security Symposium (2022)
+\item The 43nd IEEE Symposium on Security and Privacy (Oakland 2022)
+\item The 29th ACM Conference on Computer and Communications Security (CCS 2022)
+\item The 30th Usenix Security Symposium (2021)
+\item The 42nd IEEE Symposium on Security and Privacy (Oakland 2021)
+\item The 2020 ACM Asia-Pacific Workshop on Systems (APSys 2020)	
+\item The 27th ACM Conference on Computer and Communications Security (CCS 2020) 
+\item The 13th ACM International Systems and Storage Conference (SYSTOR 2020)	
+\item The 2020 Network and Distributed System Security Symposium (NDSS) (2020)  
+\item The 26th ACM Conference on Computer and Communications Security (CCS) (2019) 
+\item 10th ACM SIGOPS Asia-Pacific Workshop on Systems (APSys) (2019)
+\item The 2019 Network and Distributed System Security Symposium (NDSS) (2019)  
+\item The 2018 Network and Distributed System Security Symposium (NDSS) (2018)
+\item ACM Conference on Computer and Communications Security (CCS) (2017) 
+\item The USENIX Security Symposium (2017)
+\item The IEEE Workshop on Mobile Security Technologies (MoST) (2017)
+\item The IEEE Workshop on Mobile Security Technologies (MoST) (2016)
+\item The IEEE Symposium on Security and Privacy (2016)
+\item The 13th USENIX Symposium on Networked Systems Design and Implementation (NSDI) (2016)
+\item The Network and Distributed System Security Symposium (NDSS) (2016)
+\item The USENIX Security Symposium (2015)
+\item The IEEE Symposium on Security and Privacy (2015)
+\item CCSW 2014: The 2014 ACM Cloud Computing Security Workshop 
+\item The USENIX Security Symposium (2014)
+\item The 23rd International Conference on Parallel Architectures and Compilation Techniques (PACT 2014)
+\item The ACM Conference on Security and Privacy in Wireless and Mobile Networks (WiSec 2014)
+\item The Annual IEEE/IFIP International Conference on Dependable Systems and Networks (DSN 2014)
+\item The IEEE Symposium on Security and Privacy (2014)
+\item The Conference on Architectural Support for Programming Languages and Operating Systems (ASPLOS 2014)
+\item The ACM Cloud Computing Security Workshop (CCSW 2013)
+\item The 22nd International World Wide Web Conference (WWW 2013)
+\item International ACM Symposium on Information, Computer and Communications Security (ASIACCS 2013) 
+\item The ACM Symposium on Cloud Computing (SoCC 2012)
+\item The USENIX Security Symposium (2012)
+\item The International ACM Symposium on Information, Computer and Communications Security (ASIACCS 2012)
+\item International Conference on Measurement and Modeling of Computer Systems (SigMetrics 2011)
+\item International Conference on Trust and Trustworthy Computing (TRUST 2011)
+\item The Conference on Architectural Support for Programming Languages and Operating Systems (ASPLOS 2011)
+\item The Privacy, Security and Trust Conference (PST) (2011)
+\item The ACM SIGPLAN/SIGOPS International Conference on Virtual Execution Environments (VEE 2010)
+\item The Conference on Architectural Support for Programming Languages and Operating Systems (ASPLOS 2010)
+\item The USENIX Security Symposium (2010)
+\item The IEEE Symposium on Security and Privacy (2009)
+\item The USENIX Security Symposium (2009)
+\item The Privacy, Security and Trust Conference (PST) (2009)
+\item The Symposium on Operating Systems Design and Implementation (OSDI 2008)
+\item The Workshop on Embedded Systems Security (2008)
+\item The USENIX Security Symposium (2008)
+\item The Workshop on Architectural and System Support for Improving Software Dependability (ASID 2006)
+\item The International Conference on Parallel and Distributed Systems (ICPADS 2006)
+\item The Queen's Biennial Symposium on Communications (QBSC 2006)
+\item The Privacy, Security and Trust Conference (PST 2006)
+\item The Workshop on Architectural Support for Security and Anti-Virus (WASSA 2004)
+\end{innerenum}
+
+\item[] {\bf Organizational Activites}
+\begin{innerenum}
+\item General Chair for the ACM Conference on Computer and Communications Security (CCS) [2018]
+\item SOSP Student Scholarship Committee [2011]
+\item Local Arrangements for Parallel Architectures and Compilation Techniques (PACT) [2008]
+\item CASCON Computer Security Workshop Organizer and Speaker [2005]
+\end{innerenum}
+
+
+\item[] {\bf Funding Panels and Funding Reviews}
+\begin{innerenum}
+\item NSF SaTC (Secure and Trustworthy Cyberspace) (Panelist) [2014]
+\item NSERC Discovery (Reviewer) [2004--2013] 
+\item NSERC Strategic (Reviewer) [2006,2008] 
+\item STS Dartmouth Program (Reviewer) [2006] 
+\item NSF CSR-PDOS (Parallel and Distributed Operating Systems) (Panelist) [2006] 
+\item CITO (Panelist) [2005]
+\item NSF Career Awards (Reviewer) [2004]
+\end{innerenum}
+
+\item[] {\bf National Leadership}
+\begin{innerlist}
+\item[] {\bf CASCON Security Workshop}: Co-organized the CASCON Computer Security Workshop, which enabled security researchers from all over the nation to meet and network.  Over 100 researchers attended this one day workshop.  This workshop would go on to form the basis of the network of researchers that would apply for and receive federal funding for the Internetworked Systems Security Network (ISSNet).  
+
+\item[] {\bf ISSNet NSERC Strategic Network}: With 14 other Co-PI's
+from across Canada, I successfully applied for funding for the
+Internetworked Systems Security Network (ISSNet) Strategic Network
+Grant.  The mandate of the network is to organize, guide and provide a
+framework for security research across Canada.  The network is
+organized into 3 themes: network-centric security, software-centric
+security and human-centric security.  I am on the scientific executive
+board and the leader of the  software-centric security theme.  My duties are to provide
+guidance for other Canadian software security researchers, as well as
+administrate the program funds.
+\end{innerlist}
+
+\item[] {\bf Professional Societies and Institute Membership}
+\begin{innerlist}
+\item Member of the Institute of Electrical and Electronics Engineers (IEEE)
+\item Member of the Association for Computing Machinery (ACM)
+\item Member of USENIX Advanced Computing Systems Association
+\item Member of the Professional Engineers of Ontario (PEO)
+\item Member of the Identity, Privacy and Security Institute, U of T (IPSI)
+\end{innerlist}
+\end{lonelist}
+
+\section{University Service}
+\begin{lonelist}
+	\item[] {\bf University Level}
+	\begin{innerenum}
+		\item OGS Panel Member \hfill{2010-2011}
+		\item Schwartz Reisman Institute for Technology and Society Research Lead \hfil{2020-}
+	\end{innerenum}
+	
+	\item[] {\bf Faculty Level}
+	\begin{innerenum}
+		\item Galbraith Scholar Advisor \hfill{2008--2009, 2010--2011}
+		\item Community Affairs and Gender Issues Committee \hfill{2008--2009}
+		\item Scholarships and Awards Committee \hfill{2017--2020}
+		\item Faculty Search Committee (Computer Science) \hfill{2020-2022}
+		\item Faculty Search Committee (Munk School for International Affairs) \hfill{2021-2022}
+	\end{innerenum}
+	
+	\item[] {\bf Departmental Level}
+	\begin{innerenum}
+		\item Faculty Search Committee \hfill{2008, 2018-2020}
+		\item Computer System Users Committee \hfill{2011, 2015-2016}
+		\item Associate Chair, Graduate Studies \hfill{2012-2015}
+		\item Computer System Users Committee \hfill{2011-2012}
+		\item Computer Group Graduate Coordinator \hfill{2010--2011}
+		\item Computer Group Space Manager \hfill{2006--2009}
+		\item Committee on Curriculum Matters \hfill{2005--2007}
+		\item Graduate Student Committee \hfill{2004--2009}
+\end{innerenum}
+\item[] {\bf Major Service Roles}
+\begin{innerenum}
+	\item[] {\bf Associate Chair, Graduate Studies (2012-2015):}  As Associate Chair, I headed up several major initiatives to improve the graduate program in the ECE department at the University of Toronto.  First, the growth in the size of our course-based Masters of Engineering program (MEng), demanded major changes to the running of the program.  During my tenure from 2012-2015, the number of MEng applicants grew from 200 to over 450.  I created a committee structure and an admissions process to fairly and objectively rate each applicant.  Second, the number of graduate courses and graduate student had grown over the last few years.  I conducted a curriculum review to identify and remove dormant courses, and identify redundancies, as well as gaps in the graduate curriculum.  Finally, in response to the large number of research stream students, I initiated development of an online graduate student tracking and information database.
+	\item[] {\bf  Schwartz Reisman Institute for Technology and Society Research Lead (2020-):} I helped oversee the founding and research operation of the newly formed Schwartz Reisman Institute, a multi-disciplinary institute whose mission is to deepen our knowledge of technologies, societies, and what it means to be human by integrating research across traditional boundaries.  
+\end{innerenum}
+\end{lonelist}
+
+\section{Research Support}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{lonelist}
+\item[]
+%\begin{longtable}[h]{@{}|p{30pt}|p{7pt}|p{95pt}|p{45pt}|p{7pt}|p{30pt}|p{30pt}|}
+\begin{longtable}[h]{@{}|p{30pt}|p{6pt}|p{125pt}|p{65pt}|p{30pt}|}
+\hline
+\multicolumn{1}{|c|}{\bf Year} &
+\multicolumn{1}{|c|}{\bf PI/CI\footnote{PI: Principle Investigator,
+CI: Co-Investigator}} &
+\multicolumn{1}{|c|}{\bf Title} &
+\multicolumn{1}{|c|}{\bf Source} &
+%\multicolumn{1}{|c|}{\bf Type\footnote{OP: Operating Grant, EQ:
+%Equipment Grant, CON: Research Contract}} &
+%\multicolumn{1}{|c|}{\bf Annual} &
+\multicolumn{1}{|c|}{\bf Total} \\ \hline \hline
+2003-- & PI & Startup & Dept. & \multicolumn{1}{|r|}{120,000} \\ \hline
+2004--2006 & PI	& Computer Systems Security & Connaught & 
+%OP & 
+%\multicolumn{1}{|r|}{10,000} & 
+\multicolumn{1}{|r|}{10,000} \\ \hline
+2004--2006 & PI	& A Security Monitor for Computer Systems & Connaught &
+% OP & 
+%\multicolumn{1}{|r|}{7,500} & 
+\multicolumn{1}{|r|}{15,000} \\ \hline
+2004--2007 & PI & Security in Information Systems & NSERC RGPIN & 
+%OP &
+%\multicolumn{1}{|r|}{21,700} & 
+\multicolumn{1}{|r|}{86,800} \\ \hline
+2005--2007 & CI+1 & Identifying and Verifying Security Properties of
+Software & MITACS & 
+%OP & 
+%\multicolumn{1}{|r|}{22,500} & 
+\multicolumn{1}{|r|}{45,000} \\ \hline
+2005--2009 & CI+2 & Autonomic Computing Laboratory & CFI & 
+%EQ &
+%\multicolumn{1}{|r|}{182,844} & 
+\multicolumn{1}{|r|}{731,376} \\ \hline
+2005--2009 & CI+2 & Autonomic Computing Laboratory & IOF & 
+%OP & 
+%\multicolumn{1}{|r|}{4,750} & 
+\multicolumn{1}{|r|}{19,000} \\ \hline
+2007-2012 & PI & Low-Level System Software Support for Information
+Security & NSERC RGPIN & 
+%OP & 
+%\multicolumn{1}{|r|}{25,000} & 
+\multicolumn{1}{|r|}{125,000} \\ \hline
+2007--2009 & CI+5 & Understanding and Mitigating Malicious Activity in
+Networked Computer Systems & MITACS & 
+%OP & 
+%\multicolumn{1}{|r|}{130,000} &
+\multicolumn{1}{|r|}{260,000} \\ \hline
+2007--2012 & CI+14 & The Internetworked Systems Security Network
+(ISSNet) & NSERC SNG & 
+%OP & 
+%\multicolumn{1}{|r|}{1,207,000} &
+\multicolumn{1}{|r|}{6,035,000} \\ \hline
+2007--2012 & CI+5 & Self Powered Sensor Networks & ORF & 
+%OP &
+%\multicolumn{1}{|r|}{608,000} &	
+\multicolumn{1}{|r|}{3,040,000} \\ \hline
+2008--2010 & CI+3 & Securing Internet Client Computers & NSERC SPG &
+%OP &
+%\multicolumn{1}{|r|}{99,999} &
+\multicolumn{1}{|r|}{199,998} \\ \hline
+2008--2013 & PI & Securing Computing Systems with Virtual Machine
+Monitors & MRI ERA & 
+%OP & 
+%\multicolumn{1}{|r|}{20,000} & 
+\multicolumn{1}{|r|}{100,000} \\ \hline
+2008 & PI+1 & Internet Service Provider-Oriented Security Solutions &
+BUL & 
+%OP & 
+%\multicolumn{1}{|r|}{50,000} &
+\multicolumn{1}{|r|}{50,000} \\ \hline
+2010--2012 & CI+2 & Improving the performance and reliability of
+solid-state device based storage systems & NSERC RTI & 
+%EQ & 
+%\multicolumn{1}{|r|}{30,000} &
+\multicolumn{1}{|r|}{30,000} \\ \hline
+2010 & PI & Detection and Prevention of Atomicity Violation in
+Multi-core Execution Environment & NSERC Engage & 
+%OP &
+%\multicolumn{1}{|r|}{25,000} & 
+\multicolumn{1}{|r|}{25,000} \\ \hline
+2010 & PI & Secure Mobile Payments & NSERC Engage & 
+%OP & 
+%\multicolumn{1}{|r|}{25,000} & 
+\multicolumn{1}{|r|}{25,000} \\ \hline
+2011 & CI+1 & SmartPhone Privacy & AT\&T USA & 
+%Gift & 
+%\multicolumn{1}{|r|}{19,640} & 
+\multicolumn{1}{|r|}{19,640} \\ \hline
+2012 & PI & Bounding Risk with Mobile Devices and the Cloud & CSEC & 
+%CON 
+%\multicolumn{1}{|r|}{24,798} & 
+\multicolumn{1}{|r|}{24,798} \\ \hline
+2013 & CI+2 & Monitoring Internet openness and rights from a multidisciplinary perspective & Connaught &  
+%OP &
+%\multicolumn{1}{|r|}{50,000} & 
+\multicolumn{1}{|r|}{50,000} \\ \hline
+2013--2018 & PI & An Information Flow Approach to Data Security & NSERC Discovery & 
+%OP &
+%\multicolumn{1}{|r|}{30,000} & 
+\multicolumn{1}{|r|}{150,000} \\ \hline
+2013--2018 & PI & Secure and Reliable Computer Systems & Canada Research Chair (Tier 2) & 
+%OP  &
+%\multicolumn{1}{|r|}{100,000} & 
+\multicolumn{1}{|r|}{500,000} \\ \hline
+2014 & PI & Malware risk analysis of a USB-based EMR system & OCE & 
+%OP &
+%\multicolumn{1}{|r|}{55,000} & 
+\multicolumn{1}{|r|}{55,000} \\ \hline
+2014 & PI & Tools and Methods for Binary Provenance and Security Analysis& NSERC Engage & 
+%OP &
+%\multicolumn{1}{|r|}{25,000} & 
+\multicolumn{1}{|r|}{25,000} \\ \hline
+2015-2018 & PI & Defending Against Advanced Malware Insertion Attacks Using Binary Provenance & Telus & 
+%CON &  
+%\multicolumn{1}{|r|}{38,333} & 
+\multicolumn{1}{|r|}{115,000} \\ \hline
+2015-2017 & PI & Defending Against Advanced Malware Insertion Attacks Using Binary Provenance Analysis & OCE VIP2 & 
+%OP &
+%\multicolumn{1}{|r|}{52,857} & 
+\multicolumn{1}{|r|}{105,713} \\ \hline
+2015-2018 & PI & Computational Tools for Analyzing and Detecting Software Supply Chain Attacks & NSERC CRD & 
+%OP & 
+%\multicolumn{1}{|r|}{58,547} & 
+\multicolumn{1}{|r|}{175,643} \\ \hline
+2016 & PI & Secure High-performance ARM-based Embedded Hypervisor & NSERC Engage & 
+%OP & 
+%\multicolumn{1}{|r|}{25,000} & 
+\multicolumn{1}{|r|}{25,000} \\ \hline
+2016--2018 & PI &  Packet Obfuscation and Forwarding & Huawei & 
+%Contract & 
+%\multicolumn{1}{|r|}{147,936} & 
+\multicolumn{1}{|r|}{443,807} \\ \hline
+2017--2018 & CI+1 & Dynamic Transparency & The Office of the Privacy Commissioner of Canada & 
+%Contract & 
+%\multicolumn{1}{|r|}{50,000} & 
+\multicolumn{1}{|r|}{50,000} \\ \hline
+2017--2019 & PI+2 & The Information Technology, Transparency, and Transformation (IT3) Lab & Connaught Global Challenge & 
+%OP & 
+%\multicolumn{1}{|r|}{125,000} & 
+\multicolumn{1}{|r|}{250,000} \\ \hline
+2017 & PI & Using Targeted Input Generation to Analyze Evasive Android Applications & Google Faculty Research Award & 
+%Gift & 
+%\multicolumn{1}{|r|}{31,620} & 
+\multicolumn{1}{|r|}{31,620} \\ \hline
+2018--2020 & CI+5 & 
+Techniques and Tools for De-bloating Containers & 
+Office of Naval Research (amounts in USD) & 
+%OP & 
+%\multicolumn{1}{|r|}{2,044,793} & 
+\multicolumn{1}{|r|}{6,134,379} \\ \hline
+2018-2023 & PI & 
+A Machine Learning Approach to Detecting Security Vulnerabilities in Software &
+NSERC RGPIN & 
+%OP &
+%\multicolumn{1}{|r|}{28,000} &  
+\multicolumn{1}{|r|}{140,000} \\ \hline
+2018 & PI & VMware Donation & VMware University Research Fund & 
+%Gift & 
+%\multicolumn{1}{|r|}{13,057} &  
+\multicolumn{1}{|r|}{13,057} \\ \hline
+2018-2021 & PI & Binary Threat Analysis & Telus & 
+%Contract & 
+%\multicolumn{1}{|r|}{50,000} &  
+\multicolumn{1}{|r|}{150,000} \\ \hline
+2019-2022 & PI & Binary Threat Analysis & NSERC CRD & 
+%OP &
+%\multicolumn{1}{|r|}{71,268} &  
+\multicolumn{1}{|r|}{213,858} \\ \hline
+2019-2021 & CI+2 & Data Trusts & UofT-NUS Partnership & 
+%OP &
+%\multicolumn{1}{|r|}{10,000} &  
+\multicolumn{1}{|r|}{20,000} \\ \hline
+2019-2022 & PI & Hardware Support for Memory Protection & Huawei &
+\multicolumn{1}{|r|}{610,848} \\ \hline
+2019 & PI & Privacy and Security Award & Google &
+\multicolumn{1}{|r|}{66,270} \\ \hline
+2019-2022 & PI & Mitigating Software Vulnerabilities with Architectural Support for Type Safety & NSERC CRD &
+\multicolumn{1}{|r|}{442,800} \\ \hline
+2020-2027 & PI & Secure and Reliable Systems & Canada Research Chair (Tier 1) & 
+\multicolumn{1}{|r|}{1,400,000} \\ \hline
+2022-2023 & CI+2 & Trusted Data Sharing: Technology and Policy Frameworks Toward Data Governance Mechanisms to Maintain Public Trust in Government and City Services & SSHRC &
+\multicolumn{1}{|r|}{201,348} \\ \hline
+2022-2023 & PI & Tools and Techniques to Perform Comprehensive Security Assessments & Connaught &
+\multicolumn{1}{|r|}{100,000} \\ \hline
+\end{longtable}
+\end{lonelist}
+
+\section{Relevant Industrial Experience}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{lonelist}
+\item[] Visiting Research Scientist, Google (Mountain View). \hfill{\bf 08/2016--07/2017}
+\item[] Chief Security Architect, Enomaly Inc. \hfill{\bf 07/2009--06/2010}
+\item[] Researcher, HP Labs \hfill {\bf 06/2000--09/2000}
+\item[] Alpha Processor Design Engineer, Compaq PADC \hfill {\bf 06/1999--09/1999}
+\end{lonelist}
+
+
+
+\end{document}

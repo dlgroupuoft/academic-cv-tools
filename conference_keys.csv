@@ -1,0 +1,13 @@
+﻿conf_short,conf_full,start_year,start_num,annual,URL,Note
+CCS,ACM Conference on Computer and Communications Security (CCS),1994,1,,https://www.sigsac.org/ccs/CCS<year>/index.html,CCS actually started in 1993 but skipped a year on 1995
+Usenix Security,Usenix Security Symposium,1990,1,,https://www.usenix.org/conference/usenixsecurity<year-short>,
+NDSS,Network and Distributed System Security Symposium (NDSS),1994,1,,https://www.ndss-symposium.org/ndss<year>/,
+Oakland,IEEE Symposium on Security and Privacy,1980,1,,https://www.ieee-security.org/TC/SP<year>/,
+ApSys,ACM Asia Pacific Workshop on Systems (ApSys),2010,1,,,
+NSDI,USENIX Symposium on Networked Systems Design and Implementation (NSDI),2004,1,,https://www.usenix.org/conference/nsdi<year-short>,
+CCSW,ACM Cloud Computing Security Workshop (CCSW),2009,1,,https://ccsw.io/<year>/,
+ASPLOS,International Conference on Architectural Support for Programming Languages and Operating Systems (ASPLOS),1982,1,,,
+AsiaCCS,ACM Asia Conference on Computer and Communications Security (AsiaCCS),2006,1,,,
+SoCC,ACM Symposium on Cloud Computing (SoCC),2010,1,,,
+PST,"Conference on Privacy, Security and Trust (PST)",2003,1,,,
+VEE,International Conference on Virtual Execution Environments (VEE),2005,1,,,
